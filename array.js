@@ -1,4 +1,22 @@
 //Given an array arr of size N, the task is to find the largest element in the given array.
+// Naive method
+function largestNumIndex(arr) {
+  let flag = false;
+  for (let i = 0; i < arr?.length; i++) {
+    flag = true;
+    for (let j = 0; j < arr?.length; j++) {
+      if (arr[i] < arr[j]) {
+        flag = false;
+      }
+    }
+    if (flag === true) {
+      return i;
+    }
+  }
+}
+console.log(largestNumIndex([90, 70, 66, 21])); //Time Complexity: O(n^2)
+
+//Efficient method
 function largestNum(arr) {
   let max = 0; //Initialize max with the first element
   for (let i = 0; i < arr?.length; i++) {
