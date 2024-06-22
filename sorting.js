@@ -69,6 +69,83 @@ function insertionSort(arr) {
     }
     arr[j + 1] = key;
   }
-  return arr
+  return arr;
 }
-console.log(insertionSort([20, 5, 40, 60, 10]))    //Time Complexity: Best Case(When array is sorted) -> θ(n), Worst Case -> θ(n^2)
+console.log(insertionSort([20, 5, 40, 60, 10])); //Time Complexity: Best Case(When array is sorted) -> θ(n), Worst Case -> θ(n^2)
+
+/*Merge Sort is a Divide and Conquer algorithm. It divides the input array in two halves, calls itself for the two halves and then merges the two sorted halves. The merge() function is used for merging two halves. The merge(arr, l, m, r) is key process that assumes that arr[l..m] and arr[m+1..r] are sorted and merges the two sorted sub-arrays into one in a sorted manner. */
+
+function naiveMergesort(arr1, arr2) {
+  let m = arr1?.length;
+  let n = arr2?.length;
+  let res = [];
+  for (let i = 0; i < m; i++) {
+    res[i] = arr1[i];
+  }
+  for (let j = 0; j < n; j++) {
+    res[j + m] = arr2[j];
+  }
+
+  return res.sort(function (a, b) {
+    return a - b;
+  });
+}
+console.log(naiveMergesort([10, 15, 20, 40], [5, 6, 6, 10, 15])); //Time Complexity: θ(n^2)
+
+//Efficient solution
+function mergeSort(arr1, arr2) {
+  let m = arr1?.length;
+  let n = arr2?.length;
+  let res = [];
+  let i = 0;
+  j = 0;
+  k = 0;
+
+  while (i < m && j < n) {
+    if (arr1[i] < arr2[j]) {
+      res[k] = arr1[i];
+      i++;
+      k++;
+    } else {
+      res[k] = arr2[j];
+      j++;
+      k++;
+    }
+  }
+  while (i < m) {
+    res[k] = arr1[i];
+    i++;
+    k++;
+  }
+
+  while (j < n) {
+    res[k] = arr2[j];
+    j++;
+    k++;
+  }
+  return res;
+}
+console.log(mergeSort([10, 15, 20, 40], [5, 6, 6, 10, 15]));
+
+//Recursive solution for merge sort: Single array
+function recursiveMergeSort(arr) {
+  let len = arr?.length;
+  if (len < 2) return arr;
+  let mid = Math.floor(len / 2);
+  let leftArr = arr.slice(0, mid);
+  let rightArr = arr.slice(mid);
+  return mergeFunc(recursiveMergeSort(leftArr), recursiveMergeSort(rightArr));
+}
+
+function mergeFunc(arr1, arr2) {
+  const sortedArr = []; //initialize array to store sorted values
+  while (arr1?.length && arr2?.length) {
+    if (arr1[0] <= arr2[0]) {
+      sortedArr.push(arr1.shift());
+    } else {
+      sortedArr.push(arr2.shift());
+    }
+  }
+  return [...sortedArr, ...arr1, ...arr2];
+}
+console.log(recursiveMergeSort([90, 56, 23, 89, 21, 98]));
