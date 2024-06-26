@@ -74,8 +74,8 @@ function insertionSort(arr) {
 console.log(insertionSort([20, 5, 40, 60, 10])); //Time Complexity: Best Case(When array is sorted) -> θ(n), Worst Case -> θ(n^2)
 
 /*Merge Sort is a Divide and Conquer algorithm. It divides the input array in two halves, calls itself for the two halves and then merges the two sorted halves. The merge() function is used for merging two halves. The merge(arr, l, m, r) is key process that assumes that arr[l..m] and arr[m+1..r] are sorted and merges the two sorted sub-arrays into one in a sorted manner. */
-
-function naiveMergesort(arr1, arr2) {
+//How to merge two sorted arrays: Naive method
+function naiveMergeTwoSortArr(arr1, arr2) {
   let m = arr1?.length;
   let n = arr2?.length;
   let res = [];
@@ -90,17 +90,16 @@ function naiveMergesort(arr1, arr2) {
     return a - b;
   });
 }
-console.log(naiveMergesort([10, 15, 20, 40], [5, 6, 6, 10, 15])); //Time Complexity: θ(n^2)
+console.log(naiveMergeTwoSortArr([10, 15, 20, 40], [5, 6, 6, 10, 15])); //Time Complexity: θ(n^2)
 
-//Efficient solution
-function mergeSort(arr1, arr2) {
+//Efficient method: How to merge two sorted arrays
+function mergeTwoSortedArr(arr1, arr2) {
   let m = arr1?.length;
   let n = arr2?.length;
   let res = [];
   let i = 0;
   j = 0;
   k = 0;
-
   while (i < m && j < n) {
     if (arr1[i] < arr2[j]) {
       res[k] = arr1[i];
@@ -117,7 +116,6 @@ function mergeSort(arr1, arr2) {
     i++;
     k++;
   }
-
   while (j < n) {
     res[k] = arr2[j];
     j++;
@@ -125,7 +123,54 @@ function mergeSort(arr1, arr2) {
   }
   return res;
 }
-console.log(mergeSort([10, 15, 20, 40], [5, 6, 6, 10, 15]));
+console.log(mergeTwoSortedArr([10, 15, 20, 40], [5, 6, 6, 10, 15]));
+
+//Efficient soltution for merge sort: Single array
+function efficientMergeSort(arr) {
+  if (arr.length <= 1) {
+    return arr;
+  }
+
+  const mid = Math.floor(arr.length / 2);
+  const left = efficientMergeSort(arr.slice(0, mid));
+  const right = efficientMergeSort(arr.slice(mid));
+
+  return efficientMerge(left, right);
+}
+const unsortedArray = [38, 27, 43, 3, 9, 82, 10];
+const sortedArray = efficientMergeSort(unsortedArray);
+console.log(sortedArray);
+
+function efficientMerge(arr1, arr2) {
+  let m = arr1?.length;
+  let n = arr2?.length;
+  let res = [];
+  let i = 0;
+  j = 0;
+  k = 0;
+  while (i < m && j < n) {
+    if (arr1[i] < arr2[j]) {
+      res[k] = arr1[i];
+      i++;
+      k++;
+    } else {
+      res[k] = arr2[j];
+      j++;
+      k++;
+    }
+  }
+  while (i < m) {
+    res[k] = arr1[i];
+    i++;
+    k++;
+  }
+  while (j < n) {
+    res[k] = arr2[j];
+    j++;
+    k++;
+  }
+  return res;
+}
 
 //Recursive solution for merge sort: Single array
 function recursiveMergeSort(arr) {
@@ -134,10 +179,13 @@ function recursiveMergeSort(arr) {
   let mid = Math.floor(len / 2);
   let leftArr = arr.slice(0, mid);
   let rightArr = arr.slice(mid);
-  return mergeFunc(recursiveMergeSort(leftArr), recursiveMergeSort(rightArr));
+  return recursiveMergeFunc(
+    recursiveMergeSort(leftArr),
+    recursiveMergeSort(rightArr)
+  );
 }
 
-function mergeFunc(arr1, arr2) {
+function recursiveMergeFunc(arr1, arr2) {
   const sortedArr = []; //initialize array to store sorted values
   while (arr1?.length && arr2?.length) {
     if (arr1[0] <= arr2[0]) {
@@ -149,3 +197,79 @@ function mergeFunc(arr1, arr2) {
   return [...sortedArr, ...arr1, ...arr2];
 }
 console.log(recursiveMergeSort([90, 56, 23, 89, 21, 98]));
+
+/*Inversion Count for an array indicates – how far (or close) the array is from being sorted. If the array is already sorted, then the inversion count is 0, but if the array is sorted in reverse order, the inversion count is the maximum. 
+Given an array a[]. The task is to find the inversion count of a[]. Where two elements a[i] and a[j] form an inversion if a[i] > a[j] and i < j. 
+Naive solution : 
+Time Complexity: O(N2), Two nested loops are needed to traverse the array from start to end.
+Auxiliary Space: O(1), No extra space is required.*/
+function naiveCountInversion(arr) {
+  let res = 0;
+  let len = arr?.length;
+  for (let i = 0; i < len - 1; i++) {
+    for (let j = i + 1; j < len; j++) {
+      if (arr[i] > arr[j]) {
+        res++;
+      }
+    }
+  }
+  return res;
+}
+console.log(naiveCountInversion([1, 20, 6, 4, 5]));
+
+//Efficient solution
+//Time Complexity: O(n * log n), The algorithm used is divide and conquer i.e. merge sort whose complexity is O(n log n).
+// Auxiliary Space: O(n), Temporary array.
+function countInvMerge(arr, l, m, r) {
+  let left = [];
+  let right = [];
+
+  for (let i = l; i <= m; i++) {
+    left.push(arr[i]);
+  }
+  for (let i = m + 1; i <= r; i++) {
+    right.push(arr[i]);
+  }
+  let res = 0;
+  i = 0;
+  j = 0;
+  k = l;
+  while (i < left?.length && j < right?.length) {
+    if (left[i] <= right[j]) {
+      arr[k] = left[i];
+      i++;
+      k++;
+    } else {
+      arr[k] = right[j];
+      j++;
+      k++;
+      res = res + left.length - i; // Count split inversions
+    }
+  }
+  while (i < left?.length) {
+    arr[k] = left[i];
+    k++;
+    i++;
+  }
+  while (j < right?.length) {
+    arr[k] = right[j];
+    k++;
+    j++;
+  }
+  return res; // Return the count of split inversions
+}
+
+function countInv(arr, l, r) {
+  let res = 0;
+  if (l < r) {
+    let m = Math.floor((r + l) / 2);
+    // Count inversions in left subarray
+    res += countInv(arr, l, m);
+    // Count inversions in right subarray
+    res += countInv(arr, m + 1, r);
+    // Count split inversions
+    res += countInvMerge(arr, l, m, r);
+  }
+  return res;
+}
+console.log(countInv([1, 20, 6, 4, 5], 0, 4));
