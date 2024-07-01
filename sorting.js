@@ -273,3 +273,36 @@ function countInv(arr, l, r) {
   return res;
 }
 console.log(countInv([1, 20, 6, 4, 5], 0, 4));
+
+/*Given two unsorted arrays that represent two sets (elements in every array are distinct), find the union and intersection of two arrays.
+Time Complexity: O(m * log(m) + n * log(n)), for using map data structure.
+Auxiliary Space: O(m + n)*/
+function countUnionArr(arr1, arr2) {
+  let arr = new Set(arr1);
+  for (let i = 0; i < arr2?.length; i++) {
+    arr.add(arr2[i]);
+  }
+  return arr.size;
+}
+let a = [3, 8, 10];
+let b = [2, 8, 9, 10, 15];
+console.log(countUnionArr(a, b));
+
+function naivePartition(arr, index) {
+  let len = arr?.length;
+  [arr[index], (arr[len - 1] = arr[len - 1]), arr[index]];
+  let temp = [];
+
+  for (let i = 0; i < arr?.length; i++) {
+    if (arr[i] < arr[len - 1]) {
+      temp.push(arr[i]);
+    }
+  }
+  for (let i = 0; i < arr?.length; i++) {
+    if (arr[i] > arr[len - 1]) {
+      temp.push(arr[i]);
+    }
+  }
+  return temp;
+}
+console.log(naivePartition([5, 13, 6, 9, 12, 8, 11], 5)); //Time Complexity: θ(n), Space Complexity: θ(n)
