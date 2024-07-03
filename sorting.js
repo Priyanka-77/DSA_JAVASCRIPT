@@ -352,3 +352,20 @@ function intersectionArray(arr1, arr2) {
   }
 }
 intersectionArray([10, 20, 20, 40, 60], [2, 20, 20]); //Time Complexity: O(m + n), Space Complexity: O(1)
+
+function hoarsePartition(arr, l, h) {
+  let pivot = arr[l]; //first element will be the pivot
+  let j = h + 1;
+  let i = l - 1;
+  while (true) {
+    do {
+      i++;
+    } while (arr[i] < pivot);
+    do {
+      j--;
+    } while (arr[j] > pivot);
+    if (i >= j) return j;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+console.log(hoarsePartition([5, 3, 8, 4, 2, 7, 1, 8], 0, 7));
