@@ -295,7 +295,7 @@ Lomuto partition: In this partition, The last element chooses as a pivot in this
 Hoare's partition: In this partition, The first element chooses as a pivot in this partition. The pivot displaces its required position after partition but less comparison takes place as compared to the Lomuto partition. */
 function naivePartition(arr, index) {
   let len = arr?.length;
-  [arr[index], (arr[len - 1] = arr[len - 1]), arr[index]];
+  [arr[index], arr[len - 1]] = [arr[len - 1], arr[index]];
   let temp = [];
 
   for (let i = 0; i < arr?.length; i++) {
@@ -310,7 +310,7 @@ function naivePartition(arr, index) {
   }
   return temp;
 }
-console.log(naivePartition([5, 13, 6, 9, 12, 8, 11], 5)); //Time Complexity: θ(n), Space Complexity: θ(n)
+console.log(naivePartition([5, 13, 6, 9, 12, 8, 11], 5), "naive"); //Time Complexity: θ(n), Space Complexity: θ(n)
 
 //Lomuto Partition
 function lomutoPartition(arr, l, h) {
@@ -353,6 +353,8 @@ function intersectionArray(arr1, arr2) {
 }
 intersectionArray([10, 20, 20, 40, 60], [2, 20, 20]); //Time Complexity: O(m + n), Space Complexity: O(1)
 
+/*Hoare's Partition
+Hoare’s Partition Scheme works by initializing two indexes that start at two ends, the two indexes move toward each other until an inversion is (A smaller value on the left side and a greater value on the right side) found. When an inversion is found, two values are swapped and the process is repeated. */
 function hoarsePartition(arr, l, h) {
   let pivot = arr[l]; //first element will be the pivot
   let j = h + 1;
