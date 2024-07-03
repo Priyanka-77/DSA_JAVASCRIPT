@@ -288,6 +288,11 @@ let a = [3, 8, 10];
 let b = [2, 8, 9, 10, 15];
 console.log(countUnionArr(a, b));
 
+/*Quicksort is a Divide and Conquer Algorithm that is used for sorting the elements. In this algorithm, we choose a pivot and partitions the given array according to the pivot. Quicksort algorithm is a mostly used algorithm because this algorithm is cache-friendly and performs in-place sorting of the elements means no extra space requires for sorting the elements.
+Three partitions are possible for the Quicksort algorithm:
+Naive partition: In this partition helps to maintain the relative order of the elements but this partition takes O(n) extra space.
+Lomuto partition: In this partition, The last element chooses as a pivot in this partition. The pivot acquires its required position after partition but more comparison takes place in this partition.
+Hoare's partition: In this partition, The first element chooses as a pivot in this partition. The pivot displaces its required position after partition but less comparison takes place as compared to the Lomuto partition. */
 function naivePartition(arr, index) {
   let len = arr?.length;
   [arr[index], (arr[len - 1] = arr[len - 1]), arr[index]];
@@ -306,3 +311,44 @@ function naivePartition(arr, index) {
   return temp;
 }
 console.log(naivePartition([5, 13, 6, 9, 12, 8, 11], 5)); //Time Complexity: θ(n), Space Complexity: θ(n)
+
+//Lomuto Partition
+function lomutoPartition(arr, l, h) {
+  let pivot = arr[h]; //pivot element of the last index
+  let i = l - 1;
+  for (let j = l; j < h; j++) {
+    if (arr[j] < pivot) {
+      i++;
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+  [arr[i + 1], arr[h]] = [arr[h], arr[i + 1]];
+
+  return i + 1;
+}
+console.log(lomutoPartition([10, 80, 30, 90, 70], 0, 4)); //Time Complexity: θ(n), Space Complexity: θ(1)
+
+/*Intersection
+Iterate in while loop till any of the one array is finished.
+In each iteration we look for smaller of the two elements from both the array and increase its pointer because it will not be in other list, hence not part of intersection.
+For intersection, if both the elements are equal we print it and increment both pointer only if it is not same as the last element printed in intersection.*/
+function intersectionArray(arr1, arr2) {
+  let a = arr1?.length;
+  let b = arr2?.length;
+  let i = 0,
+    j = 0;
+  while (i < a && j < b) {
+    if (i > 0 && arr1[i] === arr1[i + 1]) {
+      i++;
+    } else if (arr1[i] < arr2[j]) {
+      i++;
+    } else if (arr1[i] > arr2[j]) {
+      j++;
+    } else {
+      console.log(arr1[i]);
+      i++;
+      j++;
+    }
+  }
+}
+intersectionArray([10, 20, 20, 40, 60], [2, 20, 20]); //Time Complexity: O(m + n), Space Complexity: O(1)
