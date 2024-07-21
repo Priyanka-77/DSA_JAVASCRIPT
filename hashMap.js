@@ -23,7 +23,6 @@ function check(arr1, arr2) {
 }
 console.log(check([1, 2, 5, 4, 0], [2, 4, 5, 0, 1]));
 
-
 /* Print Non-Repeated Elements
 Hashing is very useful to keep track of the frequency of the elements in a list.
 Question: You are given an array of integers. You need to print the non-repeated elements as they appear in the array. 
@@ -44,3 +43,55 @@ function printNonRepeated(arr, n) {
   return Array.from(uniqueElements);
 }
 console.log(printNonRepeated([1, 1, 2, 2, 3, 3, 4, 5, 6, 7], 10));
+
+//Collision Handling: Chaining
+class myHash {
+  constructor(b) {
+    this.bucket = b;
+    this.table = [];
+    for (let i = 0; i < this.bucket; i++) {
+      this.table[i] = [];                                         //[[], [], [], [], [], [], []]
+    }
+  }
+
+  hashFunction(x) {
+    return x % this.bucket;
+  }
+
+  insertItem(key) {
+    let index = this.hashFunction(key);
+    this.table[index].push(key);
+  }
+
+  searchItem(key) {
+    let index = this.hashFunction(key);
+    for (let i = 0; i < this.table[index]; i++) {
+      if (this.table[index][i] === key) {
+        return true;
+      }
+      return false;
+    }
+  }
+
+  deleteItem(key) {
+    let index = this.hashFunction(key);
+    let i = this.table[index].indexOf(key);
+    if (i !== -1) {
+      this.table[index].splice(i, 1);
+    }
+  }
+
+  displayHash() {
+    for (let i = 0; i < this.bucket; i++) {
+      console.log(i + " --> " + this.table[i].join(" --> "));
+    }
+  }
+}
+let h = new myHash(7);
+h.insertItem(70);
+h.insertItem(71);
+h.insertItem(56);                                                         //[[70, 56], [71], [], [], [], [], []]
+h.displayHash();
+console.log(h.searchItem(71));
+h.deleteItem(56);
+h.displayHash();
