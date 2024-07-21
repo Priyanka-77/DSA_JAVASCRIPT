@@ -295,7 +295,7 @@ Lomuto partition: In this partition, The last element chooses as a pivot in this
 Hoare's partition: In this partition, The first element chooses as a pivot in this partition. The pivot displaces its required position after partition but less comparison takes place as compared to the Lomuto partition. */
 function naivePartition(arr, index) {
   let len = arr?.length;
-  [arr[index], arr[len - 1]] = [arr[len - 1], arr[index]];
+  [arr[index], arr[len - 1]] = [arr[len - 1], arr[index]]; //switch the pivot index element with the last element of the array
   let temp = [];
 
   for (let i = 0; i < arr?.length; i++) {
@@ -303,6 +303,7 @@ function naivePartition(arr, index) {
       temp.push(arr[i]);
     }
   }
+  temp.push(arr[len - 1]); //store the pivot element
   for (let i = 0; i < arr?.length; i++) {
     if (arr[i] > arr[len - 1]) {
       temp.push(arr[i]);
@@ -330,7 +331,7 @@ console.log(lomutoPartition([10, 80, 30, 90, 70], 0, 4)); //Time Complexity: θ(
 
 /*Intersection
 Iterate in while loop till any of the one array is finished.
-In each iteration we look for smaller of the two elements from both the array and increase its pointer because it will not be in other list, hence not part of intersection.
+In each iteration we look for smaller of the two elements from    -- the array and increase its pointer because it will not be in other list, hence not part of intersection.
 For intersection, if both the elements are equal we print it and increment both pointer only if it is not same as the last element printed in intersection.*/
 function intersectionArray(arr1, arr2) {
   let a = arr1?.length;
@@ -371,3 +372,18 @@ function hoarsePartition(arr, l, h) {
   }
 }
 console.log(hoarsePartition([5, 3, 8, 4, 2, 7, 1, 8], 0, 7));
+
+/*Key difference b/w merge sort and quick sort: merge sort -> merging function is complex
+quick sort: partition function is complex 
+Lomuto’s Partition Scheme:
+This algorithm works by assuming the pivot element as the last element. If any other element is given as a pivot element then swap it first with the last element. Now initialize two variables i as low and j also low,  iterate over the array and increment i when arr[j] <= pivot and swap arr[i] with arr[j] otherwise increment only j. After coming out from the loop swap arr[i] with arr[hi]. This i stores the pivot element.*/
+
+function quickSort(arr, l, h) {
+  if (l < h) {
+    let p = lomutoPartition(arr, l, h);
+    quickSort(arr, l, p - 1);
+    quickSort(arr, p + 1, h);
+  }
+  return arr;
+}
+console.log(quickSort([8, 4, 7, 9, 3, 10, 5], 0, 6));
