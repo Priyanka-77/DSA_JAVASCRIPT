@@ -125,3 +125,33 @@ function separateChaining(hashSize, arr, sizeOfArray) {
 }
 console.log("separate chaining");
 separateChaining(10, [92, 4, 14, 24, 44, 91], 6);
+
+/*
+Quadratic probing is a collision handling technique in hashing. Quadratic probing says that whenever a collision occurs, search for i2 position.
+Given an array of integers and a Hash table. Fill the elements of the array into the hash table by using Quadratic Probing in case of collisions.
+*/
+function QuadraticProbing(hash, hashSize, arr, N) {
+  for (let i = 0; i < hashSize; i++) {
+    hash[i] = -1;                   //all the values in arr as -1 
+  }
+  //iterate over the array
+  for (let i = 0; i < N; i++) {
+    //computing the hash value
+    let hashValue = arr[i] % hashSize;
+
+    //if no collision then insert the element of arr in hash table
+    if (hash[hashValue] == -1) {
+      hash[hashValue] = arr[i];
+    } else {
+      for (let j = 0; j <= hashSize; j++) {
+        let nhv = (hashValue + j * j) % hashSize;     //computing the hash value again
+        if (hash[nhv] == -1) {
+          hash[nhv] = arr[i];
+          break;
+        }
+      }
+    }
+  }
+  return hash;
+}
+console.log(QuadraticProbing([], 11, [21, 10, 32, 43], 4));
