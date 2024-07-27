@@ -127,12 +127,40 @@ console.log("separate chaining");
 separateChaining(10, [92, 4, 14, 24, 44, 91], 6);
 
 /*
+Linear probing is a collision-handling technique in hashing. Linear probing says that whenever a collision occurs, search for the immediate next position.
+Given an array of integers and a hash table size. Fill the array elements into a hash table using Linear Probing to handle collisions. Duplicate elements must be mapped to the same position in the hash table while colliding elements must be mapped to the [(value+1)%hashSize] position.
+Note :-  If there's no more space to insert a new element, just drop that element. 
+*/
+function linearProbing(hashSize, arr, sizeOfArray) {
+  let table = new Array(hashSize).fill(-1);
+  for (let i = 0; i < sizeOfArray; i++) {
+    let hv = arr[i] % hashSize; //compute the hash function
+    if (table[hv] === -1) {
+      table[hv] = arr[i];
+    } else {
+      let placed = false;
+      for (let j = 1; j < hashSize; j++) {
+        let newHv = (hv + j) % hashSize;
+        if (table[newHv] === -1) {
+          table[newHv] = arr[i];
+          placed = true;
+          break;
+        }
+      }
+    }
+  }
+  return table;
+}
+console.log("linearProbing");
+console.log(linearProbing(10, 4, [4, 14, 24, 44]));
+
+/*
 Quadratic probing is a collision handling technique in hashing. Quadratic probing says that whenever a collision occurs, search for i2 position.
 Given an array of integers and a Hash table. Fill the elements of the array into the hash table by using Quadratic Probing in case of collisions.
 */
 function QuadraticProbing(hash, hashSize, arr, N) {
   for (let i = 0; i < hashSize; i++) {
-    hash[i] = -1;                   //all the values in arr as -1 
+    hash[i] = -1; //all the values in arr as -1
   }
   //iterate over the array
   for (let i = 0; i < N; i++) {
@@ -144,7 +172,7 @@ function QuadraticProbing(hash, hashSize, arr, N) {
       hash[hashValue] = arr[i];
     } else {
       for (let j = 0; j <= hashSize; j++) {
-        let nhv = (hashValue + j * j) % hashSize;     //computing the hash value again
+        let nhv = (hashValue + j * j) % hashSize; //computing the hash value again
         if (hash[nhv] == -1) {
           hash[nhv] = arr[i];
           break;
