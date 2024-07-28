@@ -205,3 +205,22 @@ function countNonRepeated(arr, n) {
   return Array.from(newSet).length;
 }
 console.log(countNonRepeated([1, 1, 2, 2, 3, 3, 4, 5, 6, 7], 10));
+
+
+/*
+You are given an array of distinct integers and a sum. Check if there's a pair with the given sum in the array.
+*/
+function sumExists(arr, N, sum) {
+  let newSet = new Set();
+  for (let i = 0; i < N; i++) {
+    let complement = sum - arr[i];
+
+    if (newSet.has(complement)) {
+      return 1;
+    }
+
+    newSet.add(arr[i]);   //add element to the set
+  }
+  return 0;
+};
+console.log(sumExists([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10, 14));
