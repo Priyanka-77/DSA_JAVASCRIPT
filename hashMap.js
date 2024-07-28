@@ -183,3 +183,25 @@ function QuadraticProbing(hash, hashSize, arr, N) {
   return hash;
 }
 console.log(QuadraticProbing([], 11, [21, 10, 32, 43], 4));
+
+/*
+Hashing is very useful to keep track of the frequency of the elements in a list.
+You are given an array of integers. You need to print the count of non-repeated elements in the array.
+*/
+function countNonRepeated(arr, n) {
+  let newSet = new Set();
+  let obj = {};
+  for (let i = 0; i < n; i++) {
+    let ele = arr[i];
+    //check if element is present in the obj or not.
+    if (!obj[ele]) {
+      obj[ele] = 1;
+      newSet.add(ele);          //add it to set if ele is inserted for the first time
+    } else {
+      obj[ele] = obj[ele] + 1;
+      newSet.delete(ele);         //delete the ele from the set if the ele is present more than one.
+    }
+  }
+  return Array.from(newSet).length;
+}
+console.log(countNonRepeated([1, 1, 2, 2, 3, 3, 4, 5, 6, 7], 10));
