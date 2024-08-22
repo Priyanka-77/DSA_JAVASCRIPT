@@ -18,7 +18,7 @@ function twoSum(nums, target) {
 console.log(twoSum([2, 7, 11, 15], 9));
 
 /*
-217. Contains Duplicate
+2. Contains Duplicate
 Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
 Example 1:
 Input: nums = [1,2,3,1]
@@ -44,6 +44,7 @@ function containsDuplicate(nums) {
 console.log(containsDuplicate([1, 2, 3, 4]));
 
 /*
+3. Concatenation of Array
 Given an integer array nums of length n, you want to create an array ans of length 2n where ans[i] == nums[i] and ans[i + n] == nums[i] for 0 <= i < n (0-indexed).
 Specifically, ans is the concatenation of two nums arrays.
 Return the array ans.
@@ -66,6 +67,7 @@ function getConcatenation(nums) {
 console.log(getConcatenation([1, 2, 1]));
 
 /*
+4. Find Minimum Operations to Make All Elements Divisible by Three
 You are given an integer array nums. In one operation, you can add or subtract 1 from any element of nums.
 Return the minimum number of operations to make all elements of nums divisible by 3.
 Example 1:
@@ -84,5 +86,34 @@ function minimumOperations(nums) {
     }
   }
   return operationCount;
-};
+}
 console.log(minimumOperations([1, 2, 1]));
+
+/*
+5. Final Value of Variable After Performing Operations
+There is a programming language with only four operations and one variable X:
+++X and X++ increments the value of the variable X by 1.
+--X and X-- decrements the value of the variable X by 1.
+Initially, the value of X is 0.
+Given an array of strings operations containing a list of operations, return the final value of X after performing all the operations.
+Example 1:
+Input: operations = ["--X","X++","X++"]
+Output: 1
+Explanation: The operations are performed as follows:
+Initially, X = 0.
+--X: X is decremented by 1, X =  0 - 1 = -1.
+X++: X is incremented by 1, X = -1 + 1 =  0.
+X++: X is incremented by 1, X =  0 + 1 =  1.
+*/
+function finalValueAfterOperations(operations) {
+  let x = 0;
+  for (let i = 0; i < operations?.length; i++) {
+    if (operations[i].includes("+")) {
+      x++;
+    } else {
+      x--;
+    }
+  }
+  return x;
+}
+console.log(finalValueAfterOperations(["--X", "X++", "X++"]));
