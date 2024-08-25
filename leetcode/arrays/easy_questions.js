@@ -192,3 +192,74 @@ console.log(
     [3, 5],
   ])
 );
+
+/*
+9. Number of Employees Who Met the Target
+There are n employees in a company, numbered from 0 to n - 1. Each employee i has worked for hours[i] hours in the company. The company requires each employee to work for at least target hours. You are given a 0-indexed array of non-negative integers hours of length n and a non-negative integer target. Return the integer denoting the number of employees who worked at least target hours. 
+Example 1:
+Input: hours = [0,1,2,3,4], target = 2
+Output: 3
+Explanation: The company wants each employee to work for at least 2 hours.
+- Employee 0 worked for 0 hours and didn't meet the target.
+- Employee 1 worked for 1 hours and didn't meet the target.
+- Employee 2 worked for 2 hours and met the target.
+- Employee 3 worked for 3 hours and met the target.
+- Employee 4 worked for 4 hours and met the target.
+There are 3 employees who met the target.
+*/
+function numberOfEmployeesWhoMetTarget(hours, target) {
+  let noOfEmployees = 0;
+
+  for (let i = 0; i < hours?.length; i++) {
+    if (hours[i] >= target) {
+      noOfEmployees++;
+    }
+  }
+  return noOfEmployees;
+}
+console.log(numberOfEmployeesWhoMetTarget([0, 1, 2, 3, 4], 2));
+
+/*
+10. Kids With the Greatest Number of Candies.
+There are n kids with candies. You are given an integer array candies, where each candies[i] represents the number of candies the ith kid has, and an integer extraCandies, denoting the number of extra candies that you have. Return a boolean array result of length n, where result[i] is true if, after giving the ith kid all the extraCandies, they will have the greatest number of candies among all the kids, or false otherwise.
+Note that multiple kids can have the greatest number of candies.
+Example 1:
+Input: candies = [2,3,5,1,3], extraCandies = 3
+Output: [true,true,true,false,true] 
+Explanation: If you give all extraCandies to:
+- Kid 1, they will have 2 + 3 = 5 candies, which is the greatest among the kids.
+- Kid 2, they will have 3 + 3 = 6 candies, which is the greatest among the kids.
+- Kid 3, they will have 5 + 3 = 8 candies, which is the greatest among the kids.
+- Kid 4, they will have 1 + 3 = 4 candies, which is not the greatest among the kids.
+- Kid 5, they will have 3 + 3 = 6 candies, which is the greatest among the kids.
+Example 2:
+Input: candies = [4,2,1,1,2], extraCandies = 1
+Output: [true,false,false,false,false] 
+Explanation: There is only 1 extra candy.
+Kid 1 will always have the greatest number of candies, even if a different kid is given the extra candy.
+*/
+function kidsWithCandies(candies, extraCandies) {
+  let maxNumber = 0;
+  let greatestCandies = [];
+
+  /*
+     Step 1: Need to get the maximum mumber from the array.
+     Step 2: Need to cehck if the totalCandies are greater than maximum number then true otherwise false.
+     */
+  for (let i = 0; i < candies?.length; i++) {
+    if (candies[i] > maxNumber) {
+      maxNumber = candies[i];
+    }
+  }
+
+  for (let i = 0; i < candies?.length; i++) {
+    const totalCandies = candies[i] + extraCandies;
+    if (totalCandies >= maxNumber) {
+      greatestCandies[i] = true;
+    } else {
+      greatestCandies[i] = false;
+    }
+  }
+  return greatestCandies;
+}
+console.log(kidsWithCandies([2, 8, 7], 1));
