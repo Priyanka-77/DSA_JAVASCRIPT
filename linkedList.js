@@ -198,7 +198,73 @@ function findMiddleNode(head) {
 }
 
 // Example usage
-const arr = [1, 2, 3, 4, 5];
-const head = createLinkedList(arr);
-const middleNode = findMiddleNode(head);
-console.log(middleNode.val); // Output: 3
+// const arr = [1, 2, 3, 4, 5];
+// const head = createLinkedList(arr);
+// const middleNode = findMiddleNode(head);
+// console.log(middleNode.val); // Output: 3
+
+/*
+Sort a Linked List
+*/
+class sortLinked {
+  constructor(data, next = null) {
+    this.data = data; // Data stored in the node
+    this.next = next; // Pointer to the next node in the list
+  }
+}
+
+// Function to sort a linked list using Brute Force approach
+function sortLinkedList(head) {
+  // Create an array to  store node values
+  let arr = [];
+
+  // Temporary pointer to traverse the linked list
+  let current = head;
+
+  while (current !== null) {
+    // Traverse the linked list and store node values in the array
+    arr.push(current.data);
+    current = current.next;
+  }
+
+  arr.sort((a, b) => a - b); //// Sort the array containing node values
+
+  // Reassign sorted values to the linked list nodes
+  current = head;
+  for (let i = 0; i < arr?.length; i++) {
+    // Update the node's data with the sorted values
+    current.data = arr[i];
+    // Move to the next node
+    current = current.next;
+  }
+
+  return head;
+}
+
+// Function to print the linked list
+function printLinkedList() {
+  let current = head;
+
+  while (current) {
+    // Print the data of the current node
+    console.log(current.data + " ");
+    // Move to the next node
+    current = current.next;
+  }
+  console.log();
+}
+// Linked List: 3 2 5 4 1
+let head = new sortLinked(3);
+head.next = new sortLinked(2);
+head.next.next = new sortLinked(5);
+head.next.next.next = new sortLinked(4);
+head.next.next.next.next = new sortLinked(1);
+
+console.log("Original Linked List: ");
+printLinkedList(head);
+
+// Sort the linked list
+head = sortLinkedList(head);
+
+console.log("Sorted Linked List: ");
+printLinkedList(head);
