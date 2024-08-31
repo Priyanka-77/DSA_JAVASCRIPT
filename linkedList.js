@@ -1,7 +1,6 @@
 /*
 Implementation of Linked List
 */
-
 class Node {
   constructor(head, next = null) {
     this.data = head;
@@ -130,23 +129,76 @@ class LinkedList {
   }
 }
 
-let ll = new LinkedList();
-ll.insertFirst(100);
-ll.insertFirst(200);
-/*200 is first and 100 is pushed to next. Ex: LinkedList {
-  head: Node { head: 200, next: Node { head: 100, next: null } },
-  size: 0
-}*/
-// console.log(ll);
-ll.insertFirst(300);
-ll.insertLast(90);
-// ll.insertAtIndex(5, 0); //at first index case
-// ll.insertAtIndex(5, 10); //out of range index case
-ll.insertAtIndex(5, 2); //at index case
-ll.printListData();
-// ll.getIndexData(3);
-ll.removeAtIndex(2);
-console.log("------");
-ll.printListData();
-ll.clearList();
-ll.printListData();
+// let ll = new LinkedList();
+// ll.insertFirst(100);
+// ll.insertFirst(200);
+// /*200 is first and 100 is pushed to next. Ex: LinkedList {
+//   head: Node { head: 200, next: Node { head: 100, next: null } },
+//   size: 0
+// }*/
+// // console.log(ll);
+// ll.insertFirst(300);
+// ll.insertLast(90);
+// // ll.insertAtIndex(5, 0); //at first index case
+// // ll.insertAtIndex(5, 10); //out of range index case
+// ll.insertAtIndex(5, 2); //at index case
+// ll.printListData();
+// // ll.getIndexData(3);
+// ll.removeAtIndex(2);
+// console.log("------");
+// ll.printListData();
+// ll.clearList();
+// ll.printListData();
+
+/*
+Find middle node of a Linked List
+Given the head node of the singly linked list, return a pointer pointing to the middle of the linked list.
+If there are an odd number of elements, return the middle element if there are even elements return the one which is farther from the head node.
+For example, let the linked list be 1->2->3->4->null
+Since the number of elements in this linked list is 4 so we have 2 middle elements, i.e. 2 and 3, but we return 3 as it is farther from the head node, i.e. 1.
+*/
+
+class LinkedNode {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+function createLinkedList(arr) {
+  let head = null;
+  let tail = null;
+
+  for (let val of arr) {
+    const newNode = new LinkedNode(val);
+    if (head === null) {
+      head = newNode;
+      tail = newNode;
+    } else {
+      tail.next = newNode; //Connecting nodes: tail.next is used to link the current tail to the new node.
+      tail = newNode; //Updating tail pointer: tail is updated to point to the new last node.
+    }
+  }
+  return head;
+}
+
+function findMiddleNode(head) {
+  // Initialize two pointers: slow and fast
+  let slow = head;
+  let fast = head;
+
+  // Move fast pointer twice as fast as slow pointer
+  while (fast !== null && fast.next !== null) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+
+  // When fast pointer reaches the end, slow pointer will be at the middle
+  return slow;
+}
+
+// Example usage
+const arr = [1, 2, 3, 4, 5];
+const head = createLinkedList(arr);
+const middleNode = findMiddleNode(head);
+console.log(middleNode.val); // Output: 3
