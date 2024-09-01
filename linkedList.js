@@ -254,17 +254,59 @@ function printLinkedList() {
   console.log();
 }
 // Linked List: 3 2 5 4 1
-let head = new sortLinked(3);
-head.next = new sortLinked(2);
-head.next.next = new sortLinked(5);
-head.next.next.next = new sortLinked(4);
-head.next.next.next.next = new sortLinked(1);
+// let head = new sortLinked(3);
+// head.next = new sortLinked(2);
+// head.next.next = new sortLinked(5);
+// head.next.next.next = new sortLinked(4);
+// head.next.next.next.next = new sortLinked(1);
 
-console.log("Original Linked List: ");
-printLinkedList(head);
+// console.log("Original Linked List: ");
+// printLinkedList(head);
 
-// Sort the linked list
-head = sortLinkedList(head);
+// // Sort the linked list
+// head = sortLinkedList(head);
 
-console.log("Sorted Linked List: ");
-printLinkedList(head);
+// console.log("Sorted Linked List: ");
+// printLinkedList(head);
+
+/*
+Reverse a linked list using recursion
+Given pointer to the head node of a linked list, the task is to recursively reverse the linked list. We need to reverse the list by changing links between nodes. 
+Input: Head: 1->2->3->4->NULL
+Output: Reversed Linked list : 4->3->2->1->NULL
+Input: Head: 1->2->3->4->5->NULL
+Output: Reversed Linked list: 5->4->3->2->1->NULL
+*/
+class recursiveLinked {
+  constructor(data, next = null) {
+    this.data = data; // Data stored in the node
+    this.next = next; // Pointer to the next node in the list
+  }
+}
+
+function reverseLinkedList(head) {
+  if (!head || !head.next) {
+    return head; //Base case
+  }
+
+  const reversedTail = reverseLinkedList(head.next); // Recursively reverse the rest
+
+  head.next.next = head; // Make the next node point back to the current head
+  head.next = null;
+
+  return reversedTail; // Return the reversed tail as the new head
+}
+// Create a sample linked list
+const head = new recursiveLinked(1);
+head.next = new recursiveLinked(2);
+head.next.next = new recursiveLinked(3);
+head.next.next.next = new recursiveLinked(4);
+// Reverse the linked list
+const reversedHead = reverseLinkedList(head);
+
+// Print the reversed list
+let current = reversedHead;
+while (current) {
+  console.log(current.data);
+  current = current.next;
+}
