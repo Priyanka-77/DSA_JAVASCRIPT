@@ -187,7 +187,7 @@ class Solution {
 }
 
 /*Ques: Given an array arr[] of size N of positive integers which may have duplicates. The task is to find the maximum and second maximum from the array, and both of them should be different from each other, so If no second max exists, then the second max will be -1.*/
-class Solution {
+class Solution2 {
   largestAndSecondLargest(sizeOfArray, arr) {
     let first = -1;
     let second = -1;
@@ -224,3 +224,28 @@ function reverseInGroups(arr, n, k) {
   }
   return arr;
 }
+
+/*
+Fizz Buzz Problem states that given an integer n, for every integer i <= n, the task is to print “FizzBuzz” if i is divisible by 3 and 5, “Fizz” if i is divisible by 3, “Buzz” if i is divisible by 5 or i (as a string) if none of the conditions are true.
+Input: n = 3
+Output: [1 2 Fizz]
+Input: n = 10
+Output: [1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz]
+*/
+function fizzBuzz(n) {
+  let arr = [];
+
+  for (let i = 1; i <= n; i++) {
+    if (i % 3 === 0 && i % 5 === 0) {
+      arr.push("FizzBuzz");
+    } else if (i % 3 === 0) {
+      arr.push("Fizz");
+    } else if (i % 5 === 0) {
+      arr.push("Buzz");
+    } else {
+      arr.push(i.toString());
+    }
+  }
+  return arr;
+}
+console.log(fizzBuzz(10));
