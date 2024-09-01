@@ -264,3 +264,13 @@ function fibonacciThreeSum(n) {
   return fib;
 }
 console.log(fibonacciThreeSum(10));
+
+function findMissingNumber(arr, n) {
+  let sum = 0;
+  for (let i = 0; i < n-1; i++) {
+    sum += arr[i];
+  }
+  const expectedNumber = (n * (n + 1)) / 2;
+  return expectedNumber - sum;
+}
+console.log(findMissingNumber([1, 2, 3, 5], 5));
