@@ -249,3 +249,18 @@ function fizzBuzz(n) {
   return arr;
 }
 console.log(fizzBuzz(10));
+
+/*
+Fibonacci Sequence
+Write Fibonacci sequence code for three sum instead of two
+*/
+function fibonacciThreeSum(n) {
+  let fib = [0, 1, 1];
+
+  for (let i = 3; i < n; i++) {
+    const nextValue = fib[i - 1] + fib[i - 2] + fib[i - 3];
+    fib.push(nextValue);
+  }
+  return fib;
+}
+console.log(fibonacciThreeSum(10));
