@@ -1,7 +1,7 @@
 /*
-Implementation of the stack: LIFO
+Implementation of the Queue: FIFO
 */
-class Stack {
+class Queue {
   constructor() {
     this.items = [];
   }
@@ -11,11 +11,11 @@ class Stack {
   }
 
   popElement() {
-    this.items.pop();
+    this.items.shift();
   }
 
   peekElement() {
-    return this.items[this.items?.length - 1];
+    return this.items[0];
   }
 
   isEmpty() {
@@ -26,16 +26,15 @@ class Stack {
     return this.items.length;
   }
 
-  clear(){
-     this.items.length = 0;
+  clear() {
+    this.items.length = 0;
   }
 
   print() {
     console.log(this.items.toString());
   }
 }
-
-const stack = new Stack();
+const stack = new Queue();
 stack.pushElement(10);
 stack.pushElement(20);
 stack.pushElement(30);
@@ -45,6 +44,6 @@ stack.popElement();
 stack.print();
 console.log(stack.isEmpty());
 stack.peekElement();
-stack.size();
+console.log(stack.size());
 stack.clear();
 stack.print();
