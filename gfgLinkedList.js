@@ -8,6 +8,7 @@ class Node {
 let head = new Node(10);
 head.next = new Node(20);
 head.next.next = new Node(30);
+head.next.next.next = new Node(40);
 
 // Function to print the linked list (Time Complexity: θ(n), Space Complexity: θ(1))
 function printLinkedList(head) {
@@ -117,7 +118,7 @@ function searchLinkedList(head, x) {
   }
   return -1;
 }
-console.log(searchLinkedList(head, 20));
+// console.log(searchLinkedList(head, 20));
 
 //Search a given data in a linked list recursively (Time Complexity: O(n), Space Complexity: O(n))
 function searchLinkedListRecursive(head, x) {
@@ -134,7 +135,7 @@ function searchLinkedListRecursive(head, x) {
   }
   return pos + 1;
 }
-console.log(searchLinkedListRecursive(head, 20));
+// console.log(searchLinkedListRecursive(head, 20));
 
 //Insert in a sorted linked list (Time Complexity: O(n), Space Complexity: O(1))
 function insertInSortedLinkedList(head, x) {
@@ -152,5 +153,92 @@ function insertInSortedLinkedList(head, x) {
   curr.next = temp;
   return head;
 }
-head = insertInSortedLinkedList(head, 17);
-printLinkedList(head);
+// head = insertInSortedLinkedList(head, 17);
+// printLinkedList(head);
+
+//Given a linked list, the task is to remove the last node of the linked list and update the head pointer of the linked list.(Time Complexity: O(n), Space Complexity: O(1))
+function deleteLastNode(head) {
+  if (head === null) return null;
+  if (head.next === null) {
+    head = null;
+    return head;
+  }
+  let curr = head;
+  while (curr.next.next !== null) {
+    curr = curr.next;
+  }
+  curr.next = null;
+  return head;
+}
+// printLinkedList(head);
+// deleteLastNode(head);
+// console.log("---------------------");
+// printLinkedList(head);
+
+//Middle of the linked list (Time Complexity: O(n), Space Complexity: O(1))
+function findMid(head) {
+  if (head === null) return;
+  let count = 0;
+  let curr = head;
+  while (curr) {
+    curr = curr.next;
+    count++;
+  }
+
+  let current = head;
+  for (let i = 0; i < Math.floor(count / 2); i++) {
+    current = current?.next;
+  }
+  console.log(current.data);
+}
+findMid(head);
+
+//Optimize: Middle of the linked list (Time Complexity: O(n), Space Complexity: O(1))
+function optimizeFindMid(head) {
+  if (head === null) return;
+
+  let slow = head;
+  let fast = head;
+  while (fast !== null && fast.next !== null) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  console.log(slow.data);
+}
+optimizeFindMid(head);
+
+//Given a Linked List and a number N, write a function that returns the value at the Nth node from the end of the Linked List.
+// Time Complexity: O(M) where M is the length of the linked list.
+// Auxiliary Space: O(1)
+function printNthNode(head, n) {
+  let len = 0;
+  for (let curr = head; curr !== null; curr = curr.next) {
+    len++;
+  }
+
+  if (len < n) return;
+
+  let curr = head;
+  for (let i = 1; i < len - n + 1; i++) {
+    curr = curr.next;
+  }
+  console.log(curr.data);
+}
+printNthNode(head, 3);
+
+function optimizePrintNthNode(head, n) {
+  if (head === null) return;
+  let first = head;
+  for (let i = 0; i < n; i++) {
+    if (first === null) return;
+    first = first.next;
+  }
+
+  let second = head;
+  while (first !== null) {
+    first = first.next;
+    second = second.next;
+  }
+  console.log(second.data);
+}
+optimizePrintNthNode(head, 3);
