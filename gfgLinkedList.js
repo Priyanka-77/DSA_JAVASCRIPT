@@ -242,3 +242,34 @@ function optimizePrintNthNode(head, n) {
   console.log(second.data);
 }
 optimizePrintNthNode(head, 3);
+
+//Reverse a linked list (Time Complexity: θ(n), Space Complexity: θ(n))
+function reverseList(head) {
+  let arr = [];
+  for (let curr = head; curr !== null; curr = curr.next) {
+    arr.push(curr.data);
+  }
+  for (let curr = head; curr != null; curr = curr.next) {
+    curr.data = arr.pop();
+  }
+  return head;
+}
+// printLinkedList(head);
+// console.log("------------------------");
+// head = reverseList(head);
+// printLinkedList(head);
+
+//Optimize Reverse a linked list (Time Complexity: θ(n), Space Complexity: θ(1))
+function optimizeReverseList(head) {
+  let curr = head;
+  let prev = null;
+  while (curr !== null) {
+    let next = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = next;
+  }
+  return prev;
+}
+head = optimizeReverseList(head);
+printLinkedList(head);
