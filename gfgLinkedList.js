@@ -6,9 +6,10 @@ class Node {
 }
 
 let head = new Node(10);
-head.next = new Node(20);
-head.next.next = new Node(30);
-head.next.next.next = new Node(40);
+head.next = new Node(10);
+head.next.next = new Node(20);
+head.next.next.next = new Node(30);
+head.next.next.next.next = new Node(30);
 
 // Function to print the linked list (Time Complexity: θ(n), Space Complexity: θ(1))
 function printLinkedList(head) {
@@ -272,4 +273,118 @@ function optimizeReverseList(head) {
   return prev;
 }
 head = optimizeReverseList(head);
+// printLinkedList(head);
+
+//Reverse a linked list recursively (Time Complexity: θ(n), Space Complexity: θ(n))
+function reverseListRecur1(head) {
+  if (head === null || head.next === null) {
+    return null;
+  }
+
+  let restHead = reverseListRecur1(head.next);
+  let restTail = head.next;
+  restTail.next = head;
+  head.next = null;
+  return restHead;
+}
+// head = reverseListRecur1(head);
+// printLinkedList(head);
+
+//Reverse a linked list recursively (Time Complexity: θ(n), Space Complexity: θ(n))
+function reverseListRecur2(curr, prev = null) {
+  if (curr === null) {
+    return prev;
+  }
+  let next = curr.next;
+  curr.next = prev;
+  return reverseListRecur2(next, curr);
+}
+console.log("-----------------------");
+head = reverseListRecur2(head, null);
 printLinkedList(head);
+
+//Remove duplicates from linked list (Time Complexity: θ(n), Space Complexity: θ(1))
+function removeDuplicates(head) {
+  let curr = head;
+  while (curr !== null && curr.head !== null) {
+    if (curr?.data === curr?.next?.data) {
+      curr.next = curr.next.next;
+    } else {
+      curr = curr.next;
+    }
+  }
+  return head;
+}
+console.log("-----------------------");
+head = removeDuplicates(head);
+printLinkedList(head);
+
+/*
+Delete without head pointer
+You are given a node del_node of a Singly Linked List where you have to delete a value of the given node from the linked list but you are not given the head of the list.
+Expected Time Complexity: O(1).
+Expected Auxilliary Space: O(1).
+*/
+function deleteNode(node) {
+  // your code here
+  if (node === null) {
+    return null;
+  } else if (node.next === null) {
+    return node;
+  }
+
+  node.data = node.next.data;
+  node.next = node.next.next;
+  return node;
+}
+head = deleteNode(head.next);
+printLinkedList(head);
+
+/*
+Identical Linked Lists
+Given the two singly Linked Lists respectively. The task is to check whether two linked lists are identical or not. 
+Expected Time Complexity: O(n).
+Expected Auxilliary Space: O(1).
+*/
+function areIdentical(head1, head2) {
+  // your code here
+  while (head1 !== null && head2 !== null) {
+    if (head1?.data !== head2.data) {
+      return false;
+    }
+    head1 = head1.next;
+    head2 = head2.next;
+  }
+  return true;
+}
+head = console.log(areIdentical(head, head));
+
+/*
+Find length of Loop
+Given the head of a linked list, determine whether the list contains a loop. If a loop is present, return the number of nodes in the loop, otherwise return 0.
+Expected Time Complexity: O(n)
+Expected Auxiliary Space: O(1)
+*/
+function countNodesinLoop(head) {
+  // your code here
+  let slow = head;
+  let fast = head;
+
+  while (slow && fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) {
+      return this.countInNodes(slow);
+    }
+  }
+  return 0;
+}
+function countInNodes(node) {
+  let count = 1;
+  let current = node;
+  while (current.next !== node) {
+    count++;
+    current = current.next;
+  }
+  return count;
+}
