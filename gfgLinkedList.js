@@ -388,3 +388,30 @@ function countInNodes(node) {
   }
   return count;
 }
+
+
+/*
+Kth from End of Linked List
+Given the head of a linked list and the number k, Your task is to find the kth node from the end. If k is more than the number of nodes, then the output should be -1.
+Expected Time Complexity: O(n).
+Expected Auxiliary Space: O(1).
+*/
+function getKthFromLast(head, k) {
+  // code here
+  let count = 0;
+  let current = head;
+  while (current) {
+    count++;
+    current = current?.next;
+  }
+
+  if (k > count) {
+    return -1;
+  } else {
+    current = head;
+    for (let i = 1; i < count - k + 1; i++) {
+      current = current.next;
+    }
+    return current.data;
+  }
+}
