@@ -114,3 +114,103 @@ console.log(stackLL.size());
 stackLL.print();
 console.log(stackLL.pop());
 console.log(stackLL.peek());
+
+function isMatching(a, b) {
+  return (
+    (a === "[" && b === "]") ||
+    (a === "(" && b === ")") ||
+    (a === "{" && b === "}")
+  );
+}
+/*Parenthesis Checker
+Given an expression string exp, write a program to examine whether the pairs and the orders of “{“, “}”, “(“, “)”, “[“, “]” are correct in the given expression. Time Complexity: O(N), Iteration over the string of size N one time, Auxiliary Space: O(N) for stack. 
+*/
+
+function isBalanced(str) {
+  let st = []; //stack
+  for (let i = 0; i < str?.length; i++) {
+    let x = str[i];
+    if (["(", "[", "{"].includes(x)) {
+      st.push(x);
+    } else {
+      if (st.length === 0) {
+        return false;
+      } else if (!isMatching(st[st.length - 1], x)) {
+        return false;
+      } else {
+        st.pop();
+      }
+    }
+  }
+  return st.length === 0;
+}
+console.log(isBalanced("(()))"), "isBalanced");
+
+/*
+Delete Mid of a Stack
+Given a stack s, delete the middle element of the stack without using any additional data structure.
+Middle element:- floor((size_of_stack+1)/2) (1-based indexing) from the bottom of the stack.
+Time Complexity: O(N), For the while loop, Auxiliary Space: O(N), for temp stack space.
+*/
+function deleteMid(s) {
+  let temp = [];
+  const mid = s.length / 2 - 1;
+  let count = 0;
+  while (count < mid) {
+    const x = s[0];
+    s.shift();
+    temp.unshift(x);
+    count++;
+  }
+  s.shift();
+  while (temp?.length !== 0) {
+    s.unshift(temp[0]);
+    temp.shift();
+  }
+  return s;
+}
+console.log(deleteMid([10, 20, 30, 40, 50]));
+
+/*
+Removing consecutive duplicates
+You are given string s. You need to remove the consecutive duplicates from the given string using a Stack.  
+Time Complexity: O(N), Auxiliary Space: O(N) for stack. 
+*/
+function removeConsecutiveDuplicates(s) {
+  let st = [];
+  for (let i = 0; i < s?.length; i++) {
+    const x = s[i];
+    if (st[st.length - 1] !== x) {
+      st.push(x);
+    }
+  }
+  return st.join("");
+}
+console.log(removeConsecutiveDuplicates("aaaaaabaabccccccc"));
+
+/*
+Removing consecutive duplicates - 2
+You are given string s. You need to remove the pair of duplicates.
+Note: The pair should be of adjacent elements and after removing a pair the remaining string is joined together. 
+Input: s = "aaabbaaccd"
+Output: ad
+Explanation: 
+Remove (aa)abbaaccd =>abbaaccd
+Remove a(bb)aaccd => aaaccd
+Remove (aa)accd => accd
+Remove a(cc)d => ad
+Time Complexity: O(N), Auxiliary Space: O(N) for stack. 
+*/
+function removePair(s) {
+  let st = [];
+  for (let i = 0; i < s?.length; i++) {
+    const x = s[i];
+    if (st?.length > 0 && st[st.length - 1] === x) {
+      st.pop();
+    } else {
+      st.push(x);
+    }
+  }
+  return st.join("");
+}
+console.log(removePair("aaabbaaccd"));
